@@ -1,5 +1,19 @@
 {
   "projects": {
     "default": "gatsby-turoials"
+  },
+  "targets": {
+    "gatsby-turoials": {
+      "hosting": {
+        "staging": [
+          "gatsby-turoials",
+          "staging-sysi-org"
+        ],
+        "production": [
+          "alunmeredith-hello-world",
+          "sysi-org"
+        ]
+      }
+    }
   }
 }
