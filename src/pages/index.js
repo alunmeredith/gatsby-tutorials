@@ -1,11 +1,9 @@
 import React from "react"
 import Layout from "../components/layout"
-import { graphql } from "gatsby"
+import { Link, graphql } from "gatsby"
 import { css } from "@emotion/core"
-import { rhythm } from "../utils/typography"
 
 export default function Home({ data }) {
-    console.log(data)
     return (
         <Layout>
             <h1
@@ -23,7 +21,13 @@ export default function Home({ data }) {
             </div>
             <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
             {data.allMarkdownRemark.edges.map(({ node }, index) =>
-                <div>
+                <Link
+                    to={node.fields.slug}
+                    css={css`
+                    text-decoration: none;
+                    color: inherit;
+                `}
+                >
                     <h3
                         css={css`
                         margin-bottom: $(rhythm(1 / 4));
@@ -39,7 +43,7 @@ export default function Home({ data }) {
                         </span>
                     </h3>
                     <p>{node.excerpt}</p>
-                </div>
+                </Link>
             )}
         </Layout>
     )
@@ -56,6 +60,9 @@ query MyQuery {
           frontmatter {
             date(formatString: "dd DD MMMM (YYYY)")
             title
+          }
+          fields {
+              slug
           }
         }
       }
