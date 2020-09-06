@@ -1,38 +1,50 @@
 import React from "react"
-import { Link } from "gatsby"
-import Sidebar from "./sidebar"
-import layoutStyle from "./layout.module.css"
-
-const ListLink = props => (
-    <li style={{ display: `inline-block`, marginRight: `1rem` }}>
-        <Link to={props.to}>{props.children}</Link>
-    </li>
-)
-
-const Header = props => (
-    <header style={{ marginBottom: `1.5rem` }}>
-        <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
-            {props.children}
-        </Link>
-    </header>
-)
-
-const Footer = props => (
-    <footer>
-        <u1 className={layoutStyle.footer}>
-            <ListLink to="/about">About</ListLink>
-            <ListLink to="/contact">Contact</ListLink>
-        </u1>
-    </footer>
-)
+import { css } from "@emotion/core"
+import { useStaticQuery, Link, graphql } from "gatsby"
+import { rhythm } from "../utils/typography"
 
 export default function Layout({ children }) {
+    const data = useStaticQuery(
+        graphql`
+        query {
+            site {
+              siteMetadata {
+                title
+              }
+            }
+          }
+        `
+    )
+
     return (
-        <div style={{ margin: `3rem auto`, maxWidth: 650, padding: `0 1rem` }}>
-            <Header><h3>MySweetSite</h3></Header>
-            <Sidebar></Sidebar>
+        <div
+            css={css`
+        margin: 0 auto;
+        max-width: 700px;
+        padding: ${rhythm(2)};
+        padding-top: ${rhythm(1.5)};
+      `}
+        >
+            <Link to={`/`}>
+                <h3
+                    css={css`
+            margin-bottom: ${rhythm(2)};
+            display: inline-block;
+            font-style: normal;
+          `}
+                >
+                    {data.site.siteMetadata.title}
+                </h3>
+            </Link>
+            <Link
+                to={`/about/`}
+                css={css`
+          float: right;
+        `}
+            >
+                About
+      </Link>
             {children}
-            <Footer></Footer>
         </div>
     )
 }
